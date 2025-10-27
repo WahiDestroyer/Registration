@@ -6,11 +6,18 @@ const App = () => {
     username: "",
     email: "",
     confirmEmail: "",
-    password: ""
+    password: "",
+    dob: "",
+    gender: "",
+    terms: false,
+    role: "ADMIN"
   });
 
+  
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -21,16 +28,21 @@ const App = () => {
       return;
     }
 
-    try {
-      const data = await authservice.registration({
-        username: formData.username,
-        email: formData.email,
-        password: formData.password
-      });
+    if (!formData.terms) {
+      console.log("Please accept terms and conditions");
+      return;
+    }
 
-      // console.log("Registered:", data);
+    const userData = {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      role: formData.role
+    };
+
+    try {
+      const laam = await authservice.registration(userData);
     } catch (err) {
-      console.log("Registration failed:", err.response?.data || err.message);
     }
   };
 
@@ -41,6 +53,7 @@ const App = () => {
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form onSubmit={handleSubmit}>
               
+              {/* Username field */}
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700">
                   Username
@@ -53,10 +66,12 @@ const App = () => {
                     type="text"
                     name="username"
                     id="username"
+                    value={formData.username}
                   />
                 </div>
               </div>
 
+              {/* Email fields */}
               <div className="mt-6">
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Email address
@@ -69,6 +84,7 @@ const App = () => {
                     name="email"
                     id="email"
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400"
+                    value={formData.email}
                   />
                 </div>
               </div>
@@ -85,10 +101,12 @@ const App = () => {
                     name="confirmEmail"
                     id="confirmEmail"
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400"
+                    value={formData.confirmEmail}
                   />
                 </div>
               </div>
 
+              {/* Password field */}
               <div className="mt-6">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Password
@@ -101,13 +119,12 @@ const App = () => {
                     name="password"
                     id="password"
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400"
+                    value={formData.password}
                   />
                 </div>
               </div>
 
-              {/* If you want confirm password field to actually validate,
-                  add confirmPassword to state and check it. Not implemented here yet. */}
-
+              {/* Date of Birth */}
               <div className="mt-6">
                 <label htmlFor="dob" className="block text-sm font-medium text-gray-700">
                   Date of Birth
@@ -120,13 +137,14 @@ const App = () => {
                     name="dob"
                     id="dob"
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                    value={formData.dob}
                   />
                 </div>
               </div>
 
+              {/* Gender */}
               <div className="flex items-center justify-center mt-6">
                 <span className="mr-3 text-gray-700 font-medium">Gender:</span>
-
                 <label className="inline-flex items-center">
                   <input
                     onChange={handleChange}
@@ -134,10 +152,10 @@ const App = () => {
                     name="gender"
                     value="Male"
                     className="form-radio h-5 w-5"
+                    checked={formData.gender === "Male"}
                   />
                   <span className="ml-2 text-gray-700">Male</span>
                 </label>
-
                 <label className="inline-flex items-center ml-6">
                   <input
                     onChange={handleChange}
@@ -145,11 +163,13 @@ const App = () => {
                     name="gender"
                     value="Female"
                     className="form-radio h-5 w-5"
+                    checked={formData.gender === "Female"}
                   />
                   <span className="ml-2 text-gray-700">Female</span>
                 </label>
               </div>
 
+              {/* Terms and Conditions */}
               <div className="mt-6 flex items-center justify-between">
                 <div className="flex items-center">
                   <input
@@ -158,6 +178,7 @@ const App = () => {
                     name="terms"
                     id="terms"
                     className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                    checked={formData.terms}
                   />
                   <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
                     I agree to the terms and conditions
@@ -165,16 +186,15 @@ const App = () => {
                 </div>
               </div>
 
+              {/* Submit Button */}
               <div className="mt-6">
                 <button
-                onClick={handleSubmit}
                   type="submit"
                   className="group relative w-full flex justify-center py-2 px-4 text-white bg-indigo-600 rounded-md"
                 >
                   Sign up
                 </button>
               </div>
-
             </form>
           </div>
         </div>
