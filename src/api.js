@@ -10,7 +10,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (confiq) => {
     const token = "tokenasdlkfjsd asdvalj;l asdjgds";
-    console.log(token);
+    // console.log(token);
 
     if (token) {
       confiq.headers.Authorization = token;

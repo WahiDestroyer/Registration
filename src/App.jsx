@@ -28,7 +28,7 @@ const App = () => {
         password: formData.password
       });
 
-      console.log("Registered:", data);
+      // console.log("Registered:", data);
     } catch (err) {
       console.log("Registration failed:", err.response?.data || err.message);
     }
@@ -167,6 +167,7 @@ const App = () => {
 
               <div className="mt-6">
                 <button
+                onClick={handleSubmit}
                   type="submit"
                   className="group relative w-full flex justify-center py-2 px-4 text-white bg-indigo-600 rounded-md"
                 >
