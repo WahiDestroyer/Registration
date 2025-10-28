@@ -1,33 +1,41 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+// import { BrowserRouter, Route, Routes } from "react-router-dom"
+// import Home from "./component/home/Home"
+// import Registration from "./component/Registration"
+// import LogIn from "./component/LogIn"
 
-import BlogDetails from "./components/home/BlogDetails";
-import EcommerceLanding from "./pages/EcommerceLanding";
-import RegistrationForm from "./pages/RegistrationForm";
-import LoginPage from "./pages/LoginPage";
-import Counter from "./pages/Users";
-import Users from "./pages/Users";
-import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
+
+// function App() {
+
+//   return (
+//     <>
+//     <BrowserRouter>
+//     <Routes>
+//       <Route index element={<Home/>}/>
+//       <Route path="/registration" element={<Registration/>}/>
+//       <Route path="/login" element={<LogIn/>}/>
+//     </Routes>
+//     </BrowserRouter>
+//     </>
+//   )
+// }
+
+// export default App
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
+import Registration from "./component/Registration";
+import LogIn from "./component/LogIn";
+import Home from "./component/home/Home";
 
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          {/* <Route index element={<Home />} /> */}
-           <Route index element={<RegistrationForm />} />
-             <Route path="/" element={<RegistrationForm />} />
-           <Route path="/landing" element={<EcommerceLanding />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-           <Route path="/login" element={<LoginPage />} />
-          <Route path="/blogs/:id" element={<BlogDetails />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+   <BrowserRouter>
+     <Routes>
+        <Route index element={<Registration />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/home" element={<Home />} /> {/* 👈 Home route */}
+      </Routes>
+   </BrowserRouter>
   );
 }
 
 export default App;
-
-// robiulhassanrobi@gmail.com
